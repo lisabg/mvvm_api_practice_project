@@ -1,3 +1,17 @@
 package com.firstproject.lisabg_oblig2
 
-data class Alpaca (var name: String, var location: String, var age: String, var imgSrc: String)
+import com.google.gson.annotations.SerializedName
+
+data class Alpaca (
+    @SerializedName("name")
+    var name: String,
+
+    @SerializedName("age")
+    var location: String,
+
+    @SerializedName("location")
+    var age: String,
+
+    @SerializedName("imgSrc")
+    var imgSrc: String
+)
