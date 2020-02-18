@@ -5,15 +5,15 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
 
-    val alpacas = MutableLiveData<List<Alpaca>>()
+    private lateinit var apiResult : Deferred<List<Alpaca>>
+    private lateinit var job1 : Job
     private val alpacaHttp =
         "https://www.uio.no/studier/emner/matnat/ifi/IN2000/v20/obligatoriske-oppgaver/"
 
@@ -22,12 +22,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        main_textview1.text = "first"
 
-        GlobalScope.launch{
-            val alpacas = retrofit().fetch2Alpacas()
-            main_textview.text = alpacas.toString()
+        job1 = GlobalScope.launch{
+            apiResult = async { retrofit().fetch2Alpacas() }
+
+            val alpacas = apiResult.await()
+            main_textview2.text = alpacas.toString()
         }
 
+
+        main_textview3.text = "last"
 
     }
 
