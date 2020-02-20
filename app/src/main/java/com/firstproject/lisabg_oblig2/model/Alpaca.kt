@@ -1,4 +1,4 @@
-package com.firstproject.lisabg_oblig2
+package com.firstproject.lisabg_oblig2.model
 
 import com.google.gson.annotations.SerializedName
 
